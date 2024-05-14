@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@types/nodemailer": "^6.4.15",
-    "axios": "^1.6.8",
     "cheerio": "^1.0.0-rc.12",
     "nodemailer": "^6.9.13"
   }

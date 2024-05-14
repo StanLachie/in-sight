@@ -2,7 +2,6 @@ import { crawlHackerNews } from "./crawlers/hackerNews";
 import { crawlDevTo } from "./crawlers/devTo";
 import { crawlProductHunt } from "./crawlers/productHunt";
 import nodemailer from "nodemailer";
-import axios from "axios";
 
 const sendEmail = async (
   platforms: {
@@ -45,7 +44,7 @@ const sendEmail = async (
   };
 
   try {
-    await transporter.sendMail(mailOptions);
+    // await transporter.sendMail(mailOptions);
 
     let embedDescription = "";
     for (const platform of platforms) {
@@ -57,10 +56,10 @@ const sendEmail = async (
     }
 
     if (process.env.DISCORD_WEBHOOK_URL) {
-      await axios(process.env.DISCORD_WEBHOOK_URL, {
+      await fetch(process.env.DISCORD_WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        data: {
+        body: JSON.stringify({
           embeds: [
             {
               title: "Daily Insight Sent",
@@ -78,7 +77,7 @@ const sendEmail = async (
               },
             },
           ],
-        },
+        }),
       });
     }
   } catch (error) {
